@@ -51,11 +51,12 @@ class TUpload(models.Model):
 
 class StudData(models.Model):
     StudName = models.CharField(max_length=60)
+    StudUsername = models.CharField(max_length=60)
     StudAadhar = models.BigIntegerField()
-    R1Marks = models.IntegerField()
-    R2Marks = models.IntegerField()
-    R3Marks = models.IntegerField()
-    StudTotal = models.IntegerField()
+    R1Marks = models.IntegerField(default=0, blank=True, null=True)
+    R2Marks = models.IntegerField(default=0, blank=True, null=True)
+    R3Marks = models.IntegerField(default=0, blank=True, null=True)
+    StudTotal = models.IntegerField(default=0, blank=True, null=True)
     R1File = models.FileField(
         upload_to='Student_Review1_File', blank=True, null=True)
     R2File = models.FileField(
@@ -67,3 +68,9 @@ class StudData(models.Model):
 
     def __str__(self):
         return "%s (%s)" % (self.StudAadhar, self.StudName)
+
+    def delete(self, *args, **kwargs):
+        self.R1File.delete()
+        self.R2File.delete()
+        self.R3File.delete()
+        return super().delete(*args, **kwargs)

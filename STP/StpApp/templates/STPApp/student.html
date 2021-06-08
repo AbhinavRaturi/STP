@@ -1,6 +1,7 @@
 <!doctype html>
-<html lang="en">
 {%load static %}
+<html lang="en">
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -106,7 +107,7 @@
       <div class="dropdown">
         <button class="btn btn-outline-none dropdown-toggle" type="button" id="dropdownMenuButton"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
-          Welcome
+          Welcome {{studusername}}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="studentlogout" onclick="myFunction()">Logout</a>
@@ -125,7 +126,7 @@
           </ul> -->
 
   </nav>
-<!--  {% for message in messages%}
+  <!--  {% for message in messages%}
   <div class="alert alert-{{ message.tags }}" role="alert">
     <strong>Message: </strong> {{ message }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -219,39 +220,81 @@ d
                                         <tbody>
                                           <tr>
                                             <td class="text-success">Review-1</td>
-                                            <td><input id="input-b5" name="input-b5[]" type="file" multiple> </td>
+                                            <form action=" /sreviewfile1" method="post" enctype="multipart/form-data">
+                                              {% csrf_token %}
+                                              <td><input id="input-b5" name="filename1" type="file" multiple> </td>
                                               <td><button class="btn-primary">Upload</button></td>
-                                            <td><a href="media/{{tfile1}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                            </svg></a></td>
-                                            <td>Submitted</td>
+                                            </form>
+                                            <td><a href="media/{{tfile1}}"><svg xmlns="http://www.w3.org/2000/svg"
+                                                  width="16" height="16" fill="currentColor" class="bi bi-download"
+                                                  viewBox="0 0 16 16">
+                                                  <path
+                                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                                  <path
+                                                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                                </svg></a></td>
+                                            <td>Submitted &nbsp <a href="media/{{tfile1}}"><svg
+                                                  xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                  fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                                  <path
+                                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                                  <path
+                                                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                                </svg></a></td>
                                           </tr>
                                           <tr>
                                             <td class="text-success">Review-2</td>
-                                            <td><input id="input-b5" name="input-b5[]" type="file" multiple> </td>
+                                            <form action=" /sreviewfile2" method="post" enctype="multipart/form-data">
+                                              {% csrf_token %}
+                                              <td><input id="input-b5" name="filename2" type="file" multiple> </td>
                                               <td><button class="btn-primary">Upload</button></td>
-                                            <td><a href="media/{{tfile2}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                            </svg></a></td>
-                                            <td>Submitted</td>
+                                            </form>
+                                            <td><a href="media/{{tfile2}}"><svg xmlns="http://www.w3.org/2000/svg"
+                                                  width="16" height="16" fill="currentColor" class="bi bi-download"
+                                                  viewBox="0 0 16 16">
+                                                  <path
+                                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                                  <path
+                                                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                                </svg></a></td>
+                                            <td>Submitted &nbsp <a href="media/{{tfile2}}"><svg
+                                                  xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                  fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                                  <path
+                                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                                  <path
+                                                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                                </svg></a></td>
                                           </tr>
                                           <tr>
                                             <td class="text-success">Review-3</td>
-                                            <td><input id="input-b5" name="input-b5[]" type="file" multiple> </td>
+                                            <form action=" /sreviewfile3" method="post" enctype="multipart/form-data">
+                                              {% csrf_token %}
+                                              <td><input id="input-b5" name="filename3" type="file" multiple> </td>
                                               <td><button class="btn-primary">Upload</button></td>
-                                            <td><a href="media/{{tfile3}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                            </svg></a></td>
-                                            <td>Submitted</td>
+                                            </form>
+                                            <td><a href="media/{{tfile3}}"><svg xmlns="http://www.w3.org/2000/svg"
+                                                  width="16" height="16" fill="currentColor" class="bi bi-download"
+                                                  viewBox="0 0 16 16">
+                                                  <path
+                                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                                  <path
+                                                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                                </svg></a></td>
+                                            <td>Submitted &nbsp <a href="media/{{tfile3}}"><svg
+                                                  xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                  fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                                  <path
+                                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                                  <path
+                                                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                                </svg></a></td>
                                           </tr>
                                         </tbody>
                                       </table>
                                     </div>
                                   </div>
-                                  
+
                                 </div>
                               </div>
                             </div>
@@ -287,20 +330,25 @@ d
                                 <div class="table-responsive panel">
                                 </div>
                               </div>
-                              <table class="table"> 
+                              <table class="table">
                                 <thead>
-                                  <th scope="col">Student Name</th>
+                                  <th scope="col">Username</th>
                                   <th scope="col">Student Certificate</th>
                                 </thead>
                                 <tbody>
                                   <tr>
                                     <td>
-                                      Raghav Agarwal
+                                      {{studusername}}
                                     </td>
-                                    <td><a href="www.google.com"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                    </svg></a></td>
+                                    {% if finalmarks > 50 %}
+                                    <td><a href="/pdf"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                          fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                          <path
+                                            d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                          <path
+                                            d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                        </svg></a></td>
+                                    {% endif %}
                                   </tr>
                                 </tbody>
                               </table>
@@ -334,7 +382,7 @@ d
         #
         ###############################################################################################################################
        -->
-        
+
 
 
 
@@ -367,10 +415,10 @@ d
 
 d
 -->
-<script>
-  $(document).ready(function() {
-      $("#input-b5").fileinput({showCaption: false, dropZoneEnabled: false});
-  });
+  <script>
+    $(document).ready(function () {
+      $("#input-b5").fileinput({ showCaption: false, dropZoneEnabled: false });
+    });
   </script>
 
   <!-- Optional JavaScript -->

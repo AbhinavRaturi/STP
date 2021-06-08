@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .models import RegForm, TUpload
+from .models import RegForm, TUpload, StudData
 import math
 import datetime
 from openpyxl import Workbook
@@ -19,6 +19,8 @@ from email.message import EmailMessage
 from django.template.loader import get_template
 from django.views.generic import View
 from django.core.files.storage import FileSystemStorage
+import random
+import array
 
 
 def render_to_pdf(template_src, context_dict={}):
@@ -35,9 +37,9 @@ class GeneratePDF(View):
     def get(self, request, *args, **kwargs):
         template = get_template('STPApp/cert.html')
         context = {
-            "results": "Abhinav Raturi",
-            "course": "Internship in STP",
-            "grades": "A+"
+            "results": namecer(request),
+            "course": "Summer Training",
+            "grades": grade(request)
         }
         html = template.render(context)
         pdf = render_to_pdf('STPApp/cert.html', context)
@@ -398,19 +400,21 @@ def all_xls_sheet():
 # $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
-def send_email(to, name, mobile):
+def send_email(to, name, mobile, sname, password1):
     name = name.upper()
     mobile = mobile
+    username = sname
+    password = password1
     message = EmailMessage()
     message['subject'] = "summer training-2020"
     message['from'] = "user email"
     message['to'] = to
     message.set_content("hello ")
     html_message = open("STPApp/templates/STPApp/mail.html",
-                        encoding="utf8").read().replace("Taat", name+" - "+mobile)
+                        encoding="utf8").read().replace("Taat", name+" - "+mobile).replace('hatt', "Your Username = "+username+" and Password = "+password)
     message.add_alternative(html_message, subtype='html')
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-        smtp.login("username", "password")
+        smtp.login("ikagarwal99@gmail.com", "raghavshilpi")
         smtp.send_message(message)
 
 
@@ -420,15 +424,60 @@ def sendmails(request):
     total_no = len(RegForms)
     for i in range(total_no):
         if RegForms[i].counter == 2:
-            name = RegForms[i].name
-            mobile = RegForms[i].mobile
-            email = RegForms[i].email
-            send_email(email, name, mobile)
+            if not StudData.objects.filter(StudAadhar=RegForms[i].aadhar).exists():
+                val = str(RegForms[i].aadhar)
+                temp = "17STU"+val[-4:]
+                s = StudData(
+                    StudName=RegForms[i].name, StudUsername=temp, StudAadhar=RegForms[i].aadhar)
+                s.save()
+                sname = temp
+                password1 = GeneratePass()
+                user = User.objects.create_user(
+                    username=sname, password=password1, first_name=RegForms[i].name)
+                user.save()
+                name = RegForms[i].name
+                mobile = RegForms[i].mobile
+                email = RegForms[i].email
+                send_email(email, name, mobile, sname, password1)
     messages.success(request, "Mail sent")
     return redirect("officer")
 
 
+def GeneratePass():
+    MAX_LEN = 12
+    DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    LOCASE_CHARACTERS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+                         'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q',
+                         'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
+                         'z']
+
+    UPCASE_CHARACTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+                         'I', 'J', 'K', 'M', 'N', 'O', 'p', 'Q',
+                         'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
+                         'Z']
+
+    SYMBOLS = ['@', '#', '$', '%', '=', ':', '?', '.', '/', '|', '~', '>',
+               '*', '(', ')', '<']
+
+    COMBINED_LIST = DIGITS + UPCASE_CHARACTERS + LOCASE_CHARACTERS + SYMBOLS
+
+    rand_digit = random.choice(DIGITS)
+    rand_upper = random.choice(UPCASE_CHARACTERS)
+    rand_lower = random.choice(LOCASE_CHARACTERS)
+    rand_symbol = random.choice(SYMBOLS)
+    temp_pass = rand_digit + rand_upper + rand_lower + rand_symbol
+    for x in range(MAX_LEN - 4):
+        temp_pass = temp_pass + random.choice(COMBINED_LIST)
+        temp_pass_list = array.array('u', temp_pass)
+        random.shuffle(temp_pass_list)
+    password = ""
+    for x in temp_pass_list:
+        password = password + x
+    return password
+
 # ! Teachers Login
+
+
 def handleteacherLogin(request):
     if request.method == 'POST':
         teacherusername = request.POST['teacherusername']
@@ -462,6 +511,8 @@ def handleteacher(request):
     n = len(RegForms)
     Tuploads = TUpload.objects.all()
     check = TUpload.objects.filter(tusername='17TEC0116')
+    studusername = StudData.objects.all()
+    slen = len(studusername)
     s1 = "Null"
     s2 = "Null"
     s3 = "NUll"
@@ -471,9 +522,9 @@ def handleteacher(request):
         s2 = "Uploaded"
     if Tuploads[0].treview3:
         s3 = "Uploaded"
-
+    totalmarks()
     params = {'allforms': RegForms, 'range': range(
-        n), 'teacherUpload': Tuploads, 'status1': s1, 'status2': s2, 'status3': s3}
+        n), 'teacherUpload': Tuploads, 'status1': s1, 'status2': s2, 'status3': s3, 'studusername': studusername, 'slen': slen}
     return render(request, 'STPApp/teacher.html', params)
 
 
@@ -522,7 +573,46 @@ def treview3test(request):
     return redirect(handleteacher)
 
 
+@login_required(login_url='teacherlogin')
+def treview1marks(request):
+    print("testing")
+    if(request.method == 'POST'):
+        adhaar = request.POST['staadhaar']
+        marks = request.POST['sr1marks']
+        StudData.objects.filter(StudAadhar=adhaar).update(R1Marks=marks)
+    return redirect(handleteacher)
+
+
+@login_required(login_url='teacherlogin')
+def treview2marks(request):
+    print("testing")
+    if(request.method == 'POST'):
+        adhaar = request.POST['staadhaar']
+        marks = request.POST['sr2marks']
+        StudData.objects.filter(StudAadhar=adhaar).update(R2Marks=marks)
+    return redirect(handleteacher)
+
+
+@login_required(login_url='teacherlogin')
+def treview3marks(request):
+    print("testing")
+    if(request.method == 'POST'):
+        adhaar = request.POST['staadhaar']
+        marks = request.POST['sr3marks']
+        StudData.objects.filter(StudAadhar=adhaar).update(R3Marks=marks)
+    return redirect(handleteacher)
+
+
+def totalmarks():
+    studusername = StudData.objects.all()
+    for s in studusername:
+        total = int(s.R1Marks)+int(s.R2Marks)+int(s.R3Marks)
+        StudData.objects.filter(
+            StudAadhar=s.StudAadhar).update(StudTotal=total)
+
 # ! Student Login
+
+
 def handlestudentLogin(request):
     if request.method == 'POST':
         studentusername = request.POST['studentusername']
@@ -554,12 +644,82 @@ def handlestudentLogout(request):
 def handlestudent(request):
     RegForms = RegForm.objects.all()
     tupload = TUpload.objects.all()
+    studentdata = StudData.objects.all()
+    studusername = StudData.objects.filter(StudUsername=request.user)
     tfileUp1 = tupload[0].treview1
     tfileUp2 = tupload[0].treview2
     tfileUp3 = tupload[0].treview3
 
     n = len(RegForms)
+    print(studusername[0].R1Marks)
+    for i in studusername:
+        print(i.R1Marks)
+    finalmarks = studusername[0].StudTotal
     print(request.user)
     params = {'allforms': RegForms, 'range': range(
-        n), 'tfile1': tfileUp1, 'tfile2': tfileUp2, 'tfile3': tfileUp3}
+        n), 'tfile1': tfileUp1, 'tfile2': tfileUp2, 'tfile3': tfileUp3, 'studusername': request.user, 'finalmarks': finalmarks, }
     return render(request, 'STPApp/student.html', params)
+
+
+def namecer(request):
+    studusername = StudData.objects.filter(StudUsername=request.user)
+    return studusername[0].StudName
+
+
+def grade(request):
+    studusername = StudData.objects.filter(StudUsername=request.user)
+    if studusername[0].StudTotal >= 90 and studusername[0].StudTotal <= 100:
+        return "A+"
+    elif studusername[0].StudTotal >= 80 and studusername[0].StudTotal < 90:
+        return "A"
+    elif studusername[0].StudTotal >= 70 and studusername[0].StudTotal < 80:
+        return "B+"
+    elif studusername[0].StudTotal >= 60 and studusername[0].StudTotal < 70:
+        return "B"
+    elif studusername[0].StudTotal >= 50 and studusername[0].StudTotal < 60:
+        return "C"
+
+
+@login_required(login_url='studentlogin')
+def sreview1test(request):
+    if request.method == 'POST':
+        filename1 = request.FILES['filename1']
+        file1_name = request.FILES['filename1'].name
+        fs = FileSystemStorage()
+        file = fs.save(filename1.name, filename1)
+        fileurl = fs.url(file)
+        report = file1_name
+        StudData.objects.filter(
+            StudUsername=request.user).update(R1File=filename1)
+        print("working")
+    return redirect(handlestudent)
+
+
+@login_required(login_url='studentlogin')
+def sreview2test(request):
+    if request.method == 'POST':
+        filename2 = request.FILES['filename2']
+        file2_name = request.FILES['filename2'].name
+        fs = FileSystemStorage()
+        file = fs.save(filename2.name, filename2)
+        fileurl = fs.url(file)
+        report = file2_name
+        StudData.objects.filter(
+            StudUsername=request.user).update(R2File=filename2)
+        print("working")
+    return redirect(handlestudent)
+
+
+@login_required(login_url='studentlogin')
+def sreview3test(request):
+    if request.method == 'POST':
+        filename3 = request.FILES['filename3']
+        file3_name = request.FILES['filename3'].name
+        fs = FileSystemStorage()
+        file = fs.save(filename3.name, filename3)
+        fileurl = fs.url(file)
+        report = file3_name
+        StudData.objects.filter(
+            StudUsername=request.user).update(R3File=filename3)
+        print("working")
+    return redirect(handlestudent)

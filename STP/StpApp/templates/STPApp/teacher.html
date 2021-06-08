@@ -313,30 +313,31 @@ d
                                         </thead>
                                         <tbody>
                                           <tr>
-                                            <form action="/treviewfile1" method="post" enctype = "multipart/form-data">
-                                            {% csrf_token %}
-                                            <td class="text-success">Review-1</td>
-                                            <td><input type="file" id="myFile" name="filename1"></td>
-                                            <td><button name="active" class="btn-primary" type="Submit">Upload</button></td>
-                                            <td>{{status1}}</td>
+                                            <form action="/treviewfile1" method="post" enctype="multipart/form-data">
+                                              {% csrf_token %}
+                                              <td class="text-success">Review-1</td>
+                                              <td><input type="file" id="myFile" name="filename1"></td>
+                                              <td><button name="active" class="btn-primary"
+                                                  type="Submit">Upload</button></td>
+                                              <td>{{status1}}</td>
                                             </form>
                                           </tr>
                                           <tr>
-                                            <form action="/treviewfile2" method="post" enctype = "multipart/form-data">
-                                            {% csrf_token %}
-                                            <td class="text-success">Review-2</td>
-                                            <td><input type="file" id="myFile" name="filename2"></td>
-                                            <td><button name="actve" class="btn-primary">Upload</button></td>
-                                            <td>{{status2}}</td>
+                                            <form action="/treviewfile2" method="post" enctype="multipart/form-data">
+                                              {% csrf_token %}
+                                              <td class="text-success">Review-2</td>
+                                              <td><input type="file" id="myFile" name="filename2"></td>
+                                              <td><button name="actve" class="btn-primary">Upload</button></td>
+                                              <td>{{status2}}</td>
                                             </form>
                                           </tr>
                                           <tr>
-                                            <form action="/treviewfile3" method="post" enctype = "multipart/form-data">
-                                            {% csrf_token %}
-                                            <td class="text-success">Review-3</td>
-                                            <td><input type="file" id="myFile" name="filename3"></td>
-                                            <td><button name="actve" class="btn-primary">Upload</button></td>
-                                            <td>{{status3 }}</td>
+                                            <form action="/treviewfile3" method="post" enctype="multipart/form-data">
+                                              {% csrf_token %}
+                                              <td class="text-success">Review-3</td>
+                                              <td><input type="file" id="myFile" name="filename3"></td>
+                                              <td><button name="actve" class="btn-primary">Upload</button></td>
+                                              <td>{{status3 }}</td>
                                             </form>
                                           </tr>
                                         </tbody>
@@ -362,15 +363,12 @@ d
                 <h5 class="mb-0">
                   <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse1"
                     aria-expanded="false" aria-controls="collapseTwo">
-                    Generate Certificate
+                    Student Marks Details
                   </button>
                 </h5>
               </div>
               <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                 <div class="card-body">
-                  <div class="col-lg-2 col-md-2 mt-2 mb-1 right"><a role="button" class="btn btn-info "
-                      href="www.google.com">Send certificates </a>
-                  </div>
                   <div class="row panel panel-success" style="margin-top:2%;">
                     <div class="fluid container">
                       <div class="panel-body">
@@ -384,17 +382,34 @@ d
                               <table class="table">
                                 <thead>
                                   <th scope="col">Student Name</th>
-                                  <th scope="col">Student Marks</th>
+                                  <th scope="col">Student Review1 Marks</th>
+                                  <th scope="col">Student Review2 Marks</th>
+                                  <th scope="col">Student Review3 Marks</th>
+                                  <th scope="col">Student Total Marks</th>
+                                  
                                 </thead>
                                 <tbody>
-                                  <tr>
+                                  
+                                    {% for si in studusername %}
+                                    <tr>
                                     <td>
-                                      Raghav Agarwal
+                                      {{si.StudName}}
                                     </td>
                                     <td>
-                                      50
+                                      {{si.R1Marks}}
                                     </td>
-                                  </tr>
+                                    <td>
+                                      {{si.R2Marks}}
+                                    </td>
+                                    <td>
+                                      {{si.R3Marks}}
+                                    </td>
+                                    <td>
+                                      {{si.StudTotal}}
+                                    </td>
+                                    </tr>
+                                    {% endfor %}
+                                  
                                 </tbody>
                               </table>
                             </div>
@@ -602,19 +617,22 @@ d
                                                           </div>
                                                           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                             <div class="form-group">
-                                                              <label for="Street">Training/Bonafide Letter: <a class = "text-primary"
+                                                              <label for="Street">Training/Bonafide Letter: <a
+                                                                  class="text-primary"
                                                                   href="media/{{ i.bletter }}">Bonafied.pdf</a></label>
                                                             </div>
                                                           </div>
                                                           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                             <div class="form-group">
-                                                              <label for="ciTy">Latest Marksheet: <a class = "text-primary"
+                                                              <label for="ciTy">Latest Marksheet: <a
+                                                                  class="text-primary"
                                                                   href="media/{{ i.lmarksheet }}">Marksheet.pdf</a></label>
                                                             </div>
                                                           </div>
                                                           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                             <div class="form-group">
-                                                              <label for="sTate">Class XII Marksheet: &nbsp<a class = "text-primary"
+                                                              <label for="sTate">Class XII Marksheet: &nbsp<a
+                                                                  class="text-primary"
                                                                   href="media/{{ i.marksheet12 }}">XII_Marksheet.pdf</a></label>
                                                             </div>
                                                           </div>
@@ -652,18 +670,34 @@ d
                                         <tbody>
                                           <tr>
                                             <td class="text-success"> Review-1</td>
-                                            <td><a href="google.com" target="_blank">a.pdf</a></td>
-                                            <td>{{i.name}}</td>
-                                            <td><button type="button" class="btn btn-primary">Submit</button></td>
+                                            {% for j in studusername %}
+                                            {% ifequal i.aadhar j.StudAadhar %}
+                                            <td><a href="media/{{j.R1File}}" target="_blank">Review1.pdf</a></td>
+                                            {% endifequal %}
+                                            {% endfor %}
+                                            <form action=" /treview1mark" method="post" enctype="multipart/form-data">
+                                              {% csrf_token %}
+                                              <input type="hidden" id="stfile" name="staadhaar" value={{i.aadhar}}>
+                                              <td><input type="number" id="stmark1" name="sr1marks" placeholder = "out of 20"></td>
+                                              <td><button class="btn btn-primary">Submit</button></td>
+                                            </form>
                                             <td>
                                               <p>xyaa</p>
                                             </td>
                                           </tr>
                                           <tr>
                                             <td class="text-success">Review-2</td>
-                                            <td>{{i.aadhar}}</td>
-                                            <td>Marks</td>
-                                            <td><button type="button" class="btn btn-primary">Submit</button></td>
+                                            {% for j in studusername %}
+                                            {% ifequal i.aadhar j.StudAadhar %}
+                                            <td><a href="media/{{j.R2File}}" target="_blank">Review2.pdf</a></td>
+                                            {% endifequal %}
+                                            {% endfor %}
+                                            <form action=" /treview2mark" method="post" enctype="multipart/form-data">
+                                              {% csrf_token %}
+                                              <input type="hidden" id="stfile" name="staadhaar" value={{i.aadhar}}>
+                                              <td><input type="number" id="stmark2" name="sr2marks" placeholder = "out of 30"></td>
+                                              <td><button class="btn btn-primary">Submit</button></td>
+                                            </form>
                                             <td>
                                               <p>xyaa</p>
                                             </td>
@@ -671,9 +705,17 @@ d
                                           <tr>
                                             <td class="text-success"> Review-3
                                             </td>
-                                            <td>{{ i.dob }}</td>
-                                            <td>Marks</td>
-                                            <td><button type="button" class="btn btn-primary">Submit</button></td>
+                                            {% for j in studusername %}
+                                            {% ifequal i.aadhar j.StudAadhar %}
+                                            <td><a href="media/{{j.R3File}}" target="_blank">Review3.pdf</a></td>
+                                            {% endifequal %}
+                                            {% endfor %}
+                                            <form action=" /treview3mark" method="post" enctype="multipart/form-data">
+                                              {% csrf_token %}
+                                              <input type="hidden" id="stfile" name="staadhaar" value={{i.aadhar}}>
+                                              <td><input type="number" id="stmark1" name="sr3marks" placeholder = "out of 50"></td>
+                                              <td><button class="btn btn-primary">Submit</button></td>
+                                            </form>
                                             <td>
                                               <p>xyaa</p>
                                             </td>
