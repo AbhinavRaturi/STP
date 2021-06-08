@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+  <style>
+    .pull-left {
+      left: 0;
+    }
+  </style>
+  <title>ONGC Internship</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #045483;">
+    <a class="navbar-brand" href="http://www.google.com">
+      <img src="https://translatorswithoutborders.org/wp-content/uploads/2018/12/STP-logo.png" width="40" height="40"
+        class="d-inline-block align-top" alt="" loading="lazy">
+      Summer Training Program
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/register">Register</a>
+        </li>
+        <li class="nav-item dropdown">
+          <!-- <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown ml-auto" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Login
+          </a>
+          <div class="dropdown-menu ml-auto" aria-labelledby="navbarDropdown">
+            <button type="button" class="btn btn-outline-none btn-block" style="margin-right: 0px;" data-toggle="modal"
+              data-target="#officerSigninModal">
+              Officer's Login
+            </button>
+          </div> -->
+
+          <!-- for students -->
+
+          <!-- <div class="dropdown-menu ml-auto" aria-labelledby="navbarDropdown">
+            <button type="button" class="btn btn-outline-none btn-block" style="margin-right: 0px;" data-toggle="modal"
+              data-target="#studentSigninModal">
+              Student Login
+            </button>
+          </div> -->
+          <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false" style="color: white;margin-right: 70px;">
+              Login
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <button type="button" class="dropdown-item" style="margin-right: 0px;" data-toggle="modal"
+                data-target="#officerSigninModal">Officer's Login</button>
+              <button type="button" class="dropdown-item" style="margin-right: 0px;" data-toggle="modal"
+                data-target="#teacherSigninModal">Teacher's Login</button>
+
+              <button type="button" class="dropdown-item" style="margin-right: 0px;" data-toggle="modal"
+                data-target="#studentSigninModal">Student Login</button>
+            </div>
+          </div>
+
+
+        </li>
+      </ul>
+    </div>
+  </nav>
+  {% for message in messages%}
+  <div class="alert alert-{{ message.tags }}" role="alert">
+    <strong>Message: </strong> {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+  <!-- 
+  #
+  #
+  #  !!!! officer login
+  #
+  #
+  #
+ -->
+  <!-- Officer models -->
+  <!-- Button trigger modal -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="officerSigninModal" tabindex="-1" role="dialog" aria-labelledby="officerSigninModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="officerSigninModalLabel">
+            Officer's Login
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/officerlogin" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="officerusername">Username</label>
+              <input type="text" class="form-control" id="officerusername" name="officerusername"
+                aria-describedby="emailHelp" placeholder="Enter email" />
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+              <label for="officerpass">Password</label>
+              <input type="password" class="form-control" id="officerpass" name="officerpass" placeholder="Password" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--* Modal  Teacher-->
+
+  <div class="modal fade" id="teacherSigninModal" tabindex="-1" role="dialog" aria-labelledby="teacherSigninModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="teacherSigninModalLabel">
+            Teacher's Login
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/teacherlogin" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="teacherusername">Username</label>
+              <input type="text" class="form-control" id="teacherusername" name="teacherusername"
+                aria-describedby="emailHelp" placeholder="Enter email" />
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+              <label for="teacherpass">Password</label>
+              <input type="password" class="form-control" id="teacherpass" name="teacherpass" placeholder="Password" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal  student-->
+  <div class="modal fade" id="studentSigninModal" tabindex="-1" role="dialog" aria-labelledby="studentSigninModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="studentSigninModalLabel">
+            Student Login
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/studentlogin" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="studentusername">Username</label>
+              <input type="text" class="form-control" id="studentusername" name="studentusername"
+                aria-describedby="emailHelp" placeholder="Enter email" />
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+              <label for="studentpass">Password</label>
+              <input type="password" class="form-control" id="studentpass" name="studentpass" placeholder="Password" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://source.unsplash.com/random/900x200/?petroleum" class="d-block w-100" alt="..." />
+      </div>
+      <div class="carousel-item">
+        <img src="https://source.unsplash.com/random/900x200/?deisel" class="d-block w-100" alt="..." />
+      </div>
+      <div class="carousel-item">
+        <img src="https://source.unsplash.com/random/900x200/?factory" class="d-block w-100" alt="..." />
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Intern with us!</h1>
+      <p class="lead">
+        At ONGC, we offer many exciting opportunities for college students and
+        recent graduates who want to develop relevant skills in a
+        collaborative, dynamic and fast-paced environment. Our interns gain
+        real, meaningful experience working for a global leader in the Oil &
+        Gas industry.<br />
+        ONGC is committed to groom talent to prepare the road map for
+        tomorrow’s national energy security. With this in view, ONGC offers
+        various internship opportunities apart from Oil and Gas Jobs for
+        freshers at ONGC.
+      </p>
+      <p>
+        <a href="https://www.ongcindia.com/wps/wcm/connect/en/career/recruitment-policy/intern-with-us/"
+          class="btn btn-lg btn-secondary">Learn more</a>
+      </p>
+    </div>
+  </div>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

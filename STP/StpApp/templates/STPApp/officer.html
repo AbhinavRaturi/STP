@@ -1,0 +1,1241 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <style>
+    body {
+      background-color: white;
+      font-family: 'Open Sans', sans-serif;
+      display: flexbox;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      transition: background-color .5s;
+    }
+
+    .sidenav {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #8d2d2d;
+      overflow-x: hidden;
+      transition: 0.5s;
+    }
+
+    .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 20px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+      color: #f1f1f1;
+    }
+
+    .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 35px;
+      margin-left: 50px;
+    }
+
+    #main {
+      transition: margin-left .5s;
+      padding: 14px;
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
+
+      .sidenav a {
+        font-size: 18px;
+      }
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+    $(function () {
+      $('a[data-toggle="tab"]').on('click', function (e) {
+        window.localStorage.setItem('activeTab', $(e.target).attr('href'));
+      });
+      var activeTab = window.localStorage.getItem('activeTab');
+      if (activeTab) {
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+      }
+    });
+
+
+    function myFunction() {
+      window.localStorage.clear();
+    } 
+  </script>
+
+  <title>Officer's Page</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #045483;">
+    <a class="navbar-brand" href="/">
+      <img src="https://translatorswithoutborders.org/wp-content/uploads/2018/12/STP-logo.png"
+          width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
+      Summer Training Program
+    </a>
+
+    <div class="ml-auto form-inline">
+
+      <div class="dropdown">
+        <button class="btn btn-outline-none dropdown-toggle" type="button" id="dropdownMenuButton"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+          Welcome {{request.user.first_name}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="officerlogout" onclick="myFunction()">Logout</a>
+        </div>
+      </div>
+
+
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <!-- <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Sign Out</a></li>
+          </ul> -->
+
+  </nav>
+  {% for message in messages%}
+  <div class="alert alert-{{ message.tags }}" role="alert">
+    <strong>Message: </strong> {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+
+
+
+
+
+
+  <!--  d
+
+
+d
+
+d
+d
+d
+d
+d
+d
+d
+d
+d
+
+d
+d
+d
+
+d
+
+d
+-->
+  <div class=" m-3">
+    <h1>INTERNSHIP REGISTRATIONS</h1>
+    <div>
+      <ul class="nav nav-tabs" id="myTab">
+
+        <li class="nav-item active "><a data-toggle="tab" href="#Home" class="text-success nav-link active "><i
+              class="fa fa-bookmark-o"></i> Home</a>
+        </li>
+        <li class="nav-item"><a data-toggle="tab" href="#Selected" class="text-success nav-link"><i
+              class="fa fa-home"></i>
+            Selected participants</a></li>
+        <li class="nav-item"><a data-toggle="tab" href="#Rejected" class="text-success nav-link"><i
+              class="fa fa-info"></i>
+            Rejected participants</a></li>
+        <li class="nav-item"><a data-toggle="tab" href="#Allpart" class="text-success nav-link"><i
+              class="fa fa-info"></i>
+            All Participants</a></li>
+      </ul>
+      <div class="tab-content">
+        <!-- 
+        ###############################################################################################################################
+        #
+        #
+        #
+        #                                 Home
+        #
+        #
+        #
+        ###############################################################################################################################
+       -->
+        <div id="Home" class="tab-pane active">
+          <h3>HOME</h3>
+          {% for i in allforms %}
+          {% ifequal i.counter 0 %}
+          <div class="accordion my-3" id="accordionExample">
+
+            <div class="card" id="{{ forloop.counter0 }}">
+              <div class="card-header" id="heading{{ forloop.counter0 }}">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapse{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapseTwo">
+                    {{i.name}}
+                  </button>
+                </h5>
+              </div>
+              <div id="collapse{{ forloop.counter0 }}" class="collapse" aria-labelledby="headingTwo"
+                data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="row panel panel-success" style="margin-top:2%;">
+                    <div class="fluid container">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-lg-12 col-md-12">
+                            <div class="row">
+                              <div class="col-lg-3 col-md-3">
+                                <div class="table-responsive panel">
+                                  <table class="table">
+                                    <tbody>
+                                      <tr>
+                                        <td class="text-center">
+                                          <form action="/deleterecent" method="post" my-1>
+                                            {% csrf_token %}
+                                            <input type="hidden" name="dvalue" value="{{i.sno}}">
+                                            <button type="submit" class="btn btn-danger text-white btn-block"><i
+                                                class="fa fa-rupee"></i>
+                                              Reject</button>
+                                          </form>
+                                          <br>
+
+                                          <form action="/acceptrecent" method="post" my-1>
+                                            {% csrf_token %}
+                                            <input type="hidden" name="dvalue1" value="{{i.sno}}">
+                                            <button type="submit" class="btn btn-info text-white btn-block"><i
+                                                class="fa fa-rupee"></i>
+                                              Accept</button>
+                                          </form>
+                                        </td>
+                                      </tr>
+
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <div class="col-lg-9 col-md-9">
+                                <ul class="nav nav-tabs">
+
+                                  <li class="nav-item"><a data-toggle="tab" href="#Personal{{ forloop.counter0 }}"
+                                      class="text-success nav-link active"><i class="fa fa-bookmark-o"></i> Personal
+                                      Details</a>
+                                  </li>
+                                  <li class="nav-item"><a data-toggle="tab" href="#Academic{{ forloop.counter0 }}"
+                                      class="text-success nav-link"><i class="fa fa-home"></i>
+                                      Academic Details</a></li>
+                                  <li class="nav-item"><a data-toggle="tab" href="#Documents{{ forloop.counter0 }}"
+                                      class="text-success nav-link"><i class="fa fa-info"></i>
+                                      Documents</a></li>
+                                  <li class="nav-item"><a data-toggle="tab" href="#ONGCBackground{{ forloop.counter0 }}"
+                                      class="text-success nav-link"><i class="fa fa-info"></i>
+                                      ONGC Background</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                  <div id="Personal{{ forloop.counter0 }}" class="tab-pane active">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success"> Name</td>
+                                            <td>{{i.name}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Aadhar Number</td>
+                                            <td>{{i.aadhar}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"> Date of Birth
+                                            </td>
+                                            <td>{{ i.dob }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"><i class="fa fa-user"> Gender</td>
+                                            <td>{{ i.gender }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Address </td>
+                                            <td>{{ i.address }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Mobile Number</td>
+                                            <td>{{ i.mobile }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"> Email ID</td>
+                                            <td><a href="">{{ i.email }}</a>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"> Father /Mother's
+                                              Name</td>
+                                            <td>{{ i.fname }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Father /Mother's
+                                              Occupation</td>
+                                            <td>{{ i.foccupation }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div id="Academic{{ forloop.counter0 }}" class="tab-pane fade">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success">Name of the
+                                              Institute</td>
+                                            <td>{{ i.institutename }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Name of the Present
+                                              Course</td>
+                                            <td>{{ i.course }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Present Year</td>
+                                            <td>{{ i.presentyear }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Latest Sem/Year
+                                              Percentage</td>
+                                            <td>{{ i.cgpa }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Percentage in class
+                                              XII</td>
+                                            <td>{{ i.percentage12 }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div id="Documents{{ forloop.counter0 }}" class="tab-pane fade">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success">Photoraph</td>
+                                            <td><a href="media/{{ i.photograph }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) image.jpg</a></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Training /Bonafied
+                                              Letter</td>
+                                            <td><a href="media/{{ i.bletter }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) letter.pdf</a></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Latest Marksheet
+                                            </td>
+                                            <td><a href="media/{{ i.lmarksheet }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) dmc.pdf</a></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Class XII Marksheet
+                                            </td>
+                                            <td><a href="media/{{ i.marksheet12 }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) xii.pdf</a></td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div id="ONGCBackground{{ forloop.counter0 }}" class="tab-pane fade">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success">Designation</td>
+                                            <td>{{ i.Designatione }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">CPF</td>
+                                            <td>{{ i.CPF }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Section</td>
+                                            <td>{{ i.Section }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Location</td>
+                                            <td>{{ i.Location }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Mobile Number</td>
+                                            <td>{{ i.MobileNumber }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /.table-responsive -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endifequal %}
+          {% endfor %}
+
+        </div>
+        <!-- 
+        ###############################################################################################################################
+        #
+        #
+        #
+        #                                 Selected One
+        #
+        #
+        #
+        ###############################################################################################################################
+       -->
+        <div id="Selected" class="tab-pane fade ">
+          <div class="row">
+            <div class="col-lg-9 col-md-9 ">
+              <h3>Selected One</h3>
+            </div>
+            <div class="input-group col-lg-3 col-md-3 pt-3">
+              <div class="mt-6 mb-1"><a role="button" class="btn btn-info "
+                  href="media/xl_sheets1/selected_one_xl_file.xlsx">Download Excel <svg width="1em" height="1em"
+                    viewBox="2 2 16 16" class="bi bi-file-spreadsheet-fill" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                      d="M12 1H4a2 2 0 0 0-2 2v2h12V3a2 2 0 0 0-2-2zm2 5h-4v2h4V6zm0 3h-4v2h4V9zm0 3h-4v3h2a2 2 0 0 0 2-2v-1zm-5 3v-3H6v3h3zm-4 0v-3H2v1a2 2 0 0 0 2 2h1zm-3-4h3V9H2v2zm0-3h3V6H2v2zm4 0V6h3v2H6zm0 1h3v2H6V9z" />
+                  </svg></a>
+
+              </div>
+              <form class="ml-2" action="/sendmails" method="post" my-1 style="padding-left: 2em;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success text-white btn-block" style="width: 8em;"><i
+                    class="fa fa-rupee"></i>
+                  Sent Mail <svg width="1em" height="1em" viewBox="0 2 16 16" class="bi bi-envelope" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                      d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                  </svg></button>
+              </form>
+            </div>
+          </div>
+
+          {% for i in allforms %}
+          {% ifequal i.counter 2 %}
+          <div class="accordion my-3" id="accordionExample">
+
+            <div class="card" id="{{ forloop.counter0 }}">
+              <div class="card-header" id="heading{{ forloop.counter0 }}">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapse{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapseTwo">
+                    {{i.name}}
+                  </button>
+                </h5>
+              </div>
+              <div id="collapse{{ forloop.counter0 }}" class="collapse" aria-labelledby="headingTwo"
+                data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="row panel panel-success" style="margin-top:2%;">
+                    <div class="fluid container">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-lg-12 col-md-12">
+                            <div class="row">
+                              <div class="col-lg-3 col-md-3">
+                                <div class="table-responsive panel">
+                                  <table class="table">
+                                    <tbody>
+                                      <tr>
+                                        <td class="text-center">
+                                          <form action="/deleterecent" method="post" my-1>
+                                            {% csrf_token %}
+                                            <input type="hidden" name="dvalue" value="{{i.sno}}">
+                                            <button type="submit" class="btn btn-danger text-white btn-block"><i
+                                                class="fa fa-rupee"></i>
+                                              Reject</button>
+                                          </form>
+                                          <br>
+
+                                          <form action="/acceptrecent" method="post" my-1>
+                                            {% csrf_token %}
+                                            <input type="hidden" name="dvalue1" value="{{i.sno}}">
+                                            <button type="submit" class="btn btn-info text-white btn-block"><i
+                                                class="fa fa-rupee"></i>
+                                              Accept</button>
+                                          </form>
+                                        </td>
+                                      </tr>
+
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <div class="col-lg-9 col-md-9">
+                                <ul class="nav nav-tabs">
+
+                                  <li class="nav-item"><a data-toggle="tab" href="#Personal{{ forloop.counter0 }}"
+                                      class="text-success nav-link active"><i class="fa fa-bookmark-o"></i> Personal
+                                      Details</a>
+                                  </li>
+                                  <li class="nav-item"><a data-toggle="tab" href="#Academic{{ forloop.counter0 }}"
+                                      class="text-success nav-link"><i class="fa fa-home"></i>
+                                      Academic Details</a></li>
+                                  <li class="nav-item"><a data-toggle="tab" href="#Documents{{ forloop.counter0 }}"
+                                      class="text-success nav-link"><i class="fa fa-info"></i>
+                                      Documents</a></li>
+                                  <li class="nav-item"><a data-toggle="tab" href="#ONGCBackground{{ forloop.counter0 }}"
+                                      class="text-success nav-link"><i class="fa fa-info"></i>
+                                      ONGC Background</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                  <div id="Personal{{ forloop.counter0 }}" class="tab-pane active">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success"> Name</td>
+                                            <td>{{i.name}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Aadhar Number</td>
+                                            <td>{{i.aadhar}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"> Date of Birth
+                                            </td>
+                                            <td>{{ i.dob }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"><i class="fa fa-user"> Gender</td>
+                                            <td>{{ i.gender }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Address </td>
+                                            <td>{{ i.address }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Mobile Number</td>
+                                            <td>{{ i.mobile }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"> Email ID</td>
+                                            <td><a href="">{{ i.email }}</a>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"> Father /Mother's
+                                              Name</td>
+                                            <td>{{ i.fname }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Father /Mother's
+                                              Occupation</td>
+                                            <td>{{ i.foccupation }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div id="Academic{{ forloop.counter0 }}" class="tab-pane fade">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success">Name of the
+                                              Institute</td>
+                                            <td>{{ i.institutename }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Name of the Present
+                                              Course</td>
+                                            <td>{{ i.course }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Present Year</td>
+                                            <td>{{ i.presentyear }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Latest Sem/Year
+                                              Percentage</td>
+                                            <td>{{ i.cgpa }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Percentage in class
+                                              XII</td>
+                                            <td>{{ i.percentage12 }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div id="Documents{{ forloop.counter0 }}" class="tab-pane fade">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success">Photoraph</td>
+                                            <td><a href="media/{{ i.photograph }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) image.jpg</a></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Training /Bonafied
+                                              Letter</td>
+                                            <td><a href="media/{{ i.bletter }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) letter.pdf</a></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Latest Marksheet
+                                            </td>
+                                            <td><a href="media/{{ i.lmarksheeth }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) dmc.pdf</a></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Class XII Marksheet
+                                            </td>
+                                            <td><a href="media/{{ i.marksheet12 }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) xii.pdf</a></td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div id="ONGCBackground{{ forloop.counter0 }}" class="tab-pane fade">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success">Designation</td>
+                                            <td>{{ i.Designation }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">CPF</td>
+                                            <td>{{ i.CPF }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Section</td>
+                                            <td>{{ i.Section }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Location</td>
+                                            <td>{{ i.Location }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Mobile Number</td>
+                                            <td>{{ i.MobileNumber }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /.table-responsive -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endifequal %}
+          {% endfor %}
+
+        </div>
+        <!-- 
+        ###############################################################################################################################
+        #
+        #
+        #
+        #                                 Rejected one
+        #
+        #
+        #
+        ###############################################################################################################################
+       -->
+        <div id="Rejected" class="tab-pane fade ">
+          <div class="row">
+            <div class="col-lg-10 col-md-10 ">
+              <h3>Rejected participants</h3>
+            </div>
+            <div class="col-lg-2 col-md-2 mt-2 mb-1"><a role="button" class="btn btn-info "
+                href="media/xl_sheets1/rejected_one_xl_file.xlsx">Download Excel <svg width="1em" height="1em"
+                  viewBox="2 2 16 16" class="bi bi-file-spreadsheet-fill" fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M12 1H4a2 2 0 0 0-2 2v2h12V3a2 2 0 0 0-2-2zm2 5h-4v2h4V6zm0 3h-4v2h4V9zm0 3h-4v3h2a2 2 0 0 0 2-2v-1zm-5 3v-3H6v3h3zm-4 0v-3H2v1a2 2 0 0 0 2 2h1zm-3-4h3V9H2v2zm0-3h3V6H2v2zm4 0V6h3v2H6zm0 1h3v2H6V9z" />
+                </svg></a>
+            </div>
+          </div>
+          {% for i in allforms %}
+          {% ifequal i.counter 1 %}
+          <div class="accordion my-3" id="accordionExample">
+
+            <div class="card" id="{{ forloop.counter0 }}">
+              <div class="card-header" id="heading{{ forloop.counter0 }}">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapse{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapseTwo">
+                    {{i.name}}
+                  </button>
+                </h5>
+              </div>
+              <div id="collapse{{ forloop.counter0 }}" class="collapse" aria-labelledby="headingTwo"
+                data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="row panel panel-success" style="margin-top:2%;">
+                    <div class="fluid container">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-lg-12 col-md-12">
+                            <div class="row">
+                              <div class="col-lg-3 col-md-3">
+                                <div class="table-responsive panel">
+                                  <table class="table">
+                                    <tbody>
+                                      <tr>
+                                        <td class="text-center">
+                                          <form action="/deleterecent" method="post" my-1>
+                                            {% csrf_token %}
+                                            <input type="hidden" name="dvalue" value="{{i.sno}}">
+                                            <button type="submit" class="btn btn-danger text-white btn-block"><i
+                                                class="fa fa-rupee"></i>
+                                              Reject</button>
+                                          </form>
+                                          <br>
+
+                                          <form action="/acceptrecent" method="post" my-1>
+                                            {% csrf_token %}
+                                            <input type="hidden" name="dvalue1" value="{{i.sno}}">
+                                            <button type="submit" class="btn btn-info text-white btn-block"><i
+                                                class="fa fa-rupee"></i>
+                                              Accept</button>
+                                          </form>
+                                        </td>
+                                      </tr>
+
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <div class="col-lg-9 col-md-9">
+                                <ul class="nav nav-tabs">
+
+                                  <li class="nav-item"><a data-toggle="tab" href="#Personal{{ forloop.counter0 }}"
+                                      class="text-success nav-link active"><i class="fa fa-bookmark-o"></i> Personal
+                                      Details</a>
+                                  </li>
+                                  <li class="nav-item"><a data-toggle="tab" href="#Academic{{ forloop.counter0 }}"
+                                      class="text-success nav-link"><i class="fa fa-home"></i>
+                                      Academic Details</a></li>
+                                  <li class="nav-item"><a data-toggle="tab" href="#Documents{{ forloop.counter0 }}"
+                                      class="text-success nav-link"><i class="fa fa-info"></i>
+                                      Documents</a></li>
+                                  <li class="nav-item"><a data-toggle="tab" href="#ONGCBackground{{ forloop.counter0 }}"
+                                      class="text-success nav-link"><i class="fa fa-info"></i>
+                                      ONGC Background</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                  <div id="Personal{{ forloop.counter0 }}" class="tab-pane active">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success"> Name</td>
+                                            <td>{{i.name}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Aadhar Number</td>
+                                            <td>{{i.aadhar}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"> Date of Birth
+                                            </td>
+                                            <td>{{ i.dob }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"><i class="fa fa-user"> Gender</td>
+                                            <td>{{ i.gender }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Address </td>
+                                            <td>{{ i.address }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Mobile Number</td>
+                                            <td>{{ i.mobile }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"> Email ID</td>
+                                            <td><a href="">{{ i.email }}</a>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"> Father /Mother's
+                                              Name</td>
+                                            <td>{{ i.fname }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Father /Mother's
+                                              Occupation</td>
+                                            <td>{{ i.foccupation }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div id="Academic{{ forloop.counter0 }}" class="tab-pane fade">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success">Name of the
+                                              Institute</td>
+                                            <td>{{ i.institutename }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Name of the Present
+                                              Course</td>
+                                            <td>{{ i.course }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Present Year</td>
+                                            <td>{{ i.presentyear }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Latest Sem/Year
+                                              Percentage</td>
+                                            <td>{{ i.cgpa }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Percentage in class
+                                              XII</td>
+                                            <td>{{ i.percentage12 }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div id="Documents{{ forloop.counter0 }}" class="tab-pane fade">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success">Photoraph</td>
+                                            <td><a href="media/{{ i.photograph }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) image.jpg</a></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Training /Bonafied
+                                              Letter</td>
+                                            <td><a href="media/{{ i.bletter }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) letter.pdf</a></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Latest Marksheet
+                                            </td>
+                                            <td><a href="media/{{ i.lmarksheeth }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) dmc.pdf</a></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Class XII Marksheet
+                                            </td>
+                                            <td><a href="media/{{ i.marksheet12 }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) xii.pdf</a></td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div id="ONGCBackground{{ forloop.counter0 }}" class="tab-pane fade">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success">Designation</td>
+                                            <td>{{ i.Designation }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">CPF</td>
+                                            <td>{{ i.CPF }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Section</td>
+                                            <td>{{ i.Section }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Location</td>
+                                            <td>{{ i.Location }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Mobile Number</td>
+                                            <td>{{ i.MobileNumber }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /.table-responsive -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endifequal %}
+          {% endfor %}
+
+        </div>
+        <!-- 
+        ###############################################################################################################################
+        #
+        #
+        #
+        #                                 All participants
+        #
+        #
+        #
+        ###############################################################################################################################
+       -->
+        <div id="Allpart" class="tab-pane fade ">
+          <div class="row">
+            <div class="col-lg-10 col-md-10 ">
+              <h3>All participants</h3>
+            </div>
+            <div class="col-lg-2 col-md-2 mt-2 mb-1"><a role="button" class="btn btn-info "
+                href="media/xl_sheets1/all_xl_file1.xlsx">Download Excel <svg width="1em" height="1em"
+                  viewBox="2 2 16 16" class="bi bi-file-spreadsheet-fill" fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M12 1H4a2 2 0 0 0-2 2v2h12V3a2 2 0 0 0-2-2zm2 5h-4v2h4V6zm0 3h-4v2h4V9zm0 3h-4v3h2a2 2 0 0 0 2-2v-1zm-5 3v-3H6v3h3zm-4 0v-3H2v1a2 2 0 0 0 2 2h1zm-3-4h3V9H2v2zm0-3h3V6H2v2zm4 0V6h3v2H6zm0 1h3v2H6V9z" />
+                </svg></a>
+            </div>
+          </div>
+          {% for i in allforms %}
+          {% if i.counter == 2 or i.counter == 1%}
+          <div class="accordion my-3" id="accordionExample1">
+
+            <div class="card" id="{{ forloop.counter0 }}">
+              <div class="card-header" id="heading{{ forloop.counter0 }}">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapse{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapseTwo">
+                    {{i.name}}
+                  </button>
+                </h5>
+              </div>
+              <div id="collapse{{ forloop.counter0 }}" class="collapse" aria-labelledby="headingTwo"
+                data-parent="#accordionExample1">
+                <div class="card-body">
+                  <div class="row panel panel-success" style="margin-top:2%;">
+                    <div class="fluid container">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-lg-12 col-md-12">
+                            <div class="row">
+                              <div class="col-lg-3 col-md-3">
+                                <div class="table-responsive panel">
+                                  <table class="table">
+                                    <tbody>
+                                      <tr>
+                                        <td class="text-center">
+                                          <form action="/deleterecent" method="post" my-1>
+                                            {% csrf_token %}
+                                            <input type="hidden" name="dvalue" value="{{i.sno}}">
+                                            <button type="submit" class="btn btn-danger text-white btn-block"><i
+                                                class="fa fa-rupee"></i>
+                                              Reject</button>
+                                          </form>
+                                          <br>
+
+                                          <form action="/acceptrecent" method="post" my-1>
+                                            {% csrf_token %}
+                                            <input type="hidden" name="dvalue1" value="{{i.sno}}">
+                                            <button type="submit" class="btn btn-info text-white btn-block"><i
+                                                class="fa fa-rupee"></i>
+                                              Accept</button>
+                                          </form>
+                                        </td>
+                                      </tr>
+
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              <div class="col-lg-9 col-md-9">
+                                <ul class="nav nav-tabs">
+
+                                  <li class="nav-item"><a data-toggle="tab" href="#Personal1{{ forloop.counter0 }}"
+                                      class="text-success nav-link active"><i class="fa fa-bookmark-o"></i> Personal
+                                      Details</a>
+                                  </li>
+                                  <li class="nav-item"><a data-toggle="tab" href="#Academic1{{ forloop.counter0 }}"
+                                      class="text-success nav-link"><i class="fa fa-home"></i>
+                                      Academic Details</a></li>
+                                  <li class="nav-item"><a data-toggle="tab" href="#Documents1{{ forloop.counter0 }}"
+                                      class="text-success nav-link"><i class="fa fa-info"></i>
+                                      Documents</a></li>
+                                  <li class="nav-item"><a data-toggle="tab"
+                                      href="#ONGCBackground1{{ forloop.counter0 }}" class="text-success nav-link"><i
+                                        class="fa fa-info"></i>
+                                      ONGC Background</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                  <div id="Personal1{{ forloop.counter0 }}" class="tab-pane active">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success"> Name</td>
+                                            <td>{{i.name}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Aadhar Number</td>
+                                            <td>{{i.aadhar}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"> Date of Birth
+                                            </td>
+                                            <td>{{ i.dob }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"><i class="fa fa-user"> Gender</td>
+                                            <td>{{ i.gender }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Address </td>
+                                            <td>{{ i.address }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Mobile Number</td>
+                                            <td>{{ i.mobile }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"> Email ID</td>
+                                            <td><a href="">{{ i.email }}</a>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"> Father /Mother's
+                                              Name</td>
+                                            <td>{{ i.fname }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Father /Mother's
+                                              Occupation</td>
+                                            <td>{{ i.foccupation }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div id="Academic1{{ forloop.counter0 }}" class="tab-pane fade">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success">Name of the
+                                              Institute</td>
+                                            <td>{{ i.institutename }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Name of the Present
+                                              Course</td>
+                                            <td>{{ i.course }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Present Year</td>
+                                            <td>{{ i.presentyear }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Latest Sem/Year
+                                              Percentage</td>
+                                            <td>{{ i.cgpa }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Percentage in class
+                                              XII</td>
+                                            <td>{{ i.percentage12 }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div id="Documents1{{ forloop.counter0 }}" class="tab-pane fade">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success">Photoraph</td>
+                                            <td><a href="media/{{ i.photograph }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) image.jpg</a></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Training /Bonafied
+                                              Letter</td>
+                                            <td><a href="media/{{ i.bletter }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) letter.pdf</a></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Latest Marksheet
+                                            </td>
+                                            <td><a href="media/{{ i.lmarksheeth }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) dmc.pdf</a></td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Class XII Marksheet
+                                            </td>
+                                            <td><a href="media/{{ i.marksheet12 }}" target="_blank">{{ i.name}}
+                                                ({{ i.aadhar }}) xii.pdf</a></td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  <div id="ONGCBackground1{{ forloop.counter0 }}" class="tab-pane fade">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success">Designation</td>
+                                            <td>{{ i.Designation }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">CPF</td>
+                                            <td>{{ i.CPF }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Section</td>
+                                            <td>{{ i.Section }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Location</td>
+                                            <td>{{ i.Location }}</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Mobile Number</td>
+                                            <td>{{ i.MobileNumber }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /.table-responsive -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+
+        </div>
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <!--  d
+
+
+d
+
+d
+d
+d
+d
+d
+d
+d
+d
+d
+
+d
+d
+d
+
+d
+
+d
+-->
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Register</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #faf3fd;
+            font-family: 'Open Sans', sans-serif;
+            display: flexbox;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            margin: 0 auto;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(17, 17, 17, 0.3);
+            overflow: hidden;
+            width: 1000px;
+            max-width: 100%;
+            padding: 3rem;
+        }
+
+        .header {
+            border-bottom: 1px solid #f0f0f0;
+            background-color: #f7f7f7;
+            padding: 20px 40px;
+        }
+
+        .header h2 {
+            margin: 0;
+        }
+
+        .lead {
+            font-family: 'Open Sans', sans-serif;
+            padding-top: 10px;
+            font-size: inherit;
+        }
+
+        .form {
+            padding: 30px 40px;
+        }
+
+        .form-control {
+            margin-bottom: 10px;
+            padding-bottom: 20px;
+            position: relative;
+            padding-top: 1rem;
+        }
+
+        .form-control label {
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .form-control input {
+            border: 2px solid #f0f0f0;
+            border-radius: 4px;
+            display: block;
+            font-family: inherit;
+            font-size: 14px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .form-control input:focus {
+            outline: 0;
+            border-color: #777;
+        }
+
+        .btn-primary {
+            background-color: #045483 !important;
+            border-color: #045483 !important;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:active,
+        .btn-primary:visited,
+        .btn-primary:focus {
+            background-color: #045483 !important;
+            border-color: #045483 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #045483;">
+        <a class="navbar-brand" href="http://www.google.com">
+            <img src="https://translatorswithoutborders.org/wp-content/uploads/2018/12/STP-logo.png"
+                width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
+            Summer Training Program
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+    {% for message in messages%}
+    <div class="alert alert-{{ message.tags }}" role="alert">
+      <strong>Message: </strong> {{ message }}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+
+    <div class="container mt-4">
+        <h2>Registration Form</h2>
+        <form class="needs-validation" method="post" action="register" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="name">Name&nbsp;<span style="color: red">*</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required>
+                    <div class="invalid-feedback">
+                        Please enter your name.
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="aadhar">Aadhar Number&nbsp;<span style="color: red">*</label>
+                    <input type="number" class="form-control" id="aadhar" name="aadhar"
+                        pattern="^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$" placeholder="xxxx xxxx xxxx" required>
+                    <div class="invalid-feedback">
+                        Please enter a valid Aadhar Number.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="gender">Gender&nbsp;<span style="color: red">*</label>
+                    <select class="custom-select " id="gender" name="gender" required>
+                        <option value="">Choose your gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="others">Others</option>
+                    </select>
+                    <div class="invalid-feedback">Please choose gender</div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="dob">Date of Birth&nbsp;<span style="color: red">*</label>
+                    <input type="date" class="form-control" id="dob" name="dob" max="2020-01-01" min="1980-01-31" required>
+                    <div class="invalid-feedback">
+                        Please enter your Date-of-birth in mm/dd/yyyy format.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address&nbsp;<span style="color: red">*</label>
+                <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" required>
+                <div class="invalid-feedback">
+                    Please enter Address.
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="mailadd">Email&nbsp;<span style="color: red">*</label>
+                    <input type="email" class="form-control" id="mailadd" name="mailadd" placeholder="Email" required>
+                    <div class="invalid-feedback">
+                        Please enter a valid email.
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="mobile">Mobile Number&nbsp;<span style="color: red">*</label>
+                    <input type="text" class="form-control" id="mobile" name="mobile" pattern="^\+?([9][1])\)?[- ]?([0-9]{10})$"
+                        placeholder="+91-10 digit mobile number" required>
+                    <div class="invalid-feedback">
+                        Please enter a valid mobile number e.g. +91-(10-digit mobile number).
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="father">Father/Mother's Name&nbsp;<span style="color: red">*</label>
+                    <input type="text" class="form-control" id="father" name="father" placeholder="Parent's Name" required>
+                    <div class="invalid-feedback">
+                        Please enter parent's name.
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="occupation">Occupation&nbsp;<span style="color: red">*</label>
+                    <input type="text" class="form-control" id="occupation" name="occupation" placeholder="Parent's Ocuupaton" required>
+                    <div class="invalid-feedback">
+                        Please enter parent's occupation.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="std12">Percentage in Class XII&nbsp;<span style="color: red">*</label>
+                    <input type="text" class="form-control" id="std12" name="std12" placeholder="Percentage" required>
+                    <div class="invalid-feedback">
+                        Please enter your percentage.
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="cgpa">Cgpa/ Percentage in Last Semester&nbsp;<span style="color: red">*</label>
+                    <input type="text" class="form-control" id="cgpa" name="cgpa" placeholder="Percentage" required>
+                    <div class="invalid-feedback">
+                        Please enter your cgpa/ percentage.
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="institute">Name of present Institute&nbsp;<span style="color: red">*</label>
+                    <input type="text" class="form-control" id="institute" name="institute" placeholder="Institute Name" required>
+                    <div class="invalid-feedback">
+                        Please enter a Institute's name.
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="pyear">Present Year&nbsp;<span style="color: red">*</label>
+                    <select class="custom-select" id="pyear" name="pyear" required>
+                        <option value="">Select Present Year</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please enter your present year at college.
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="course">Course&nbsp;<span style="color: red">*</label>
+                    <select class="custom-select" id="course" name="course" onfocus='this.size=5;' onblur='this.size=1;'
+                        onchange='this.size=1; this.blur();' required>
+                        <option value="">Choose your course</option>
+                        <option value="BE/B. Tech CS">BE/B. Tech CS</option>
+                        <option value="BE/B. Tech IT">BE/B. Tech IT</option>
+                        <option value="BE/B. Tech Electronics & Telecommunication">BE/B. Tech Electronics &
+                            Telecommunication</option>
+                        <option value="Environment Science">Environment Science</option>
+                        <option value="Law">Law</option>
+                        <option value="Logistics">Logistics</option>
+                        <option value="Mass Communication">Mass Communication</option>
+                        <option value="Micro-Biology">Micro-Biology</option>
+                        <option value="Geology">Geology</option>
+                        <option value="Geophysics">Geophysics</option>
+                        <option value="MBA(HR)">MBA(HR)</option>
+                        <option value="MBA(Finance)">MBA(Finance)</option>
+                        <option value="MCA">MCA</option>
+                        <option value="MSc. Chemistry">MSc. Chemistry</option>
+                        <option value="Mech. Engineering">Mech. Engineering</option>
+                        <option value="Petroleum Engineering">Petroleum Engineering</option>
+                        <option value="Electrical Engineering">Electrical Engineering</option>
+                        <option value="Chem. Engineering">Chem. Engineering</option>
+                        <option value="Civil Engineering">Civil Engineering</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please enter your present course.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="photo">Photograph&nbsp;<span style="color: red">*</label>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <span class="btn btn-primary"
+                            onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
+                        <input id="photo" name="photo" accept="image/*"
+                            onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());"
+                            style="display: none;" type="file" required>
+                        <div class="invalid-feedback">
+                            Please upload .jpg/.png.
+                        </div>
+                    </span>
+                    <span class="form-control"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="marksheet12">Marksheet of Class XII&nbsp;<span style="color: red">*</label>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <span class="btn btn-primary"
+                            onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
+                        <input name="marksheet12" id="marksheet12" name="marksheet12" accept=".pdf"
+                            onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());"
+                            style="display: none;" type="file" required>
+                        <div class="invalid-feedback">
+                            Please upload .pdf file.
+                        </div>
+                    </span>
+                    <span class="form-control"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dmc">Last Semester Marksheet&nbsp;<span style="color: red">*</label>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <span class="btn btn-primary"
+                            onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
+                        <input name="dmc" id="dmc" accept=".pdf"
+                            onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());"
+                            style="display: none;" type="file" required>
+                        <div class="invalid-feedback">
+                            Please upload .pdf file.
+                        </div>
+                    </span>
+                    <span class="form-control"></span>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="certificate">Bonafied Training Letter&nbsp;<span style="color: red">*</label>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <!-- <div> -->
+                            
+                        <span class="btn btn-primary"
+                            onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
+                            
+                        <input name="certificate" id="certificate" accept=".pdf"
+                            onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());"
+                            style="display: none;" type="file" required>
+                        <!-- </div> -->
+                        <br>
+                            <div class="invalid-feedback">
+                            Please upload .pdf file.
+                        </div>
+                    </span>
+                    <span class="form-control"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                    <label class="form-check-label" for="gridCheck">
+                        I agree all terms and conditions&nbsp;<span style="color: red">*
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn-primary btn-lg btn-block">Register</button>
+        </form>
+        
+    </div>
+
+    <!-- Optional JavaScript -->
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

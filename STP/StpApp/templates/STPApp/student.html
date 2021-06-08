@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+{%load static %}
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <style>
+    body {
+      background-color: white;
+      font-family: 'Open Sans', sans-serif;
+      display: flexbox;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      transition: background-color .5s;
+    }
+
+    .sidenav {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #8d2d2d;
+      overflow-x: hidden;
+      transition: 0.5s;
+    }
+
+    .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 20px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+      color: #f1f1f1;
+    }
+
+    .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 35px;
+      margin-left: 50px;
+    }
+
+    #main {
+      transition: margin-left .5s;
+      padding: 14px;
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
+
+      .sidenav a {
+        font-size: 18px;
+      }
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+    $(function () {
+      $('a[data-toggle="tab"]').on('click', function (e) {
+        window.localStorage.setItem('activeTab', $(e.target).attr('href'));
+      });
+      var activeTab = window.localStorage.getItem('activeTab');
+      if (activeTab) {
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+      }
+    });
+
+
+    function myFunction() {
+      window.localStorage.clear();
+    }
+  </script>
+
+  <title>Officer's Page</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #224692;">
+    <a class="navbar-brand" href="/">
+      <img
+        src="data:image/png;base64,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"
+        width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
+      STP
+    </a>
+
+    <div class="ml-auto form-inline">
+
+      <div class="dropdown">
+        <button class="btn btn-outline-none dropdown-toggle" type="button" id="dropdownMenuButton"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+          Welcome
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="studentlogout" onclick="myFunction()">Logout</a>
+        </div>
+      </div>
+
+
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <!-- <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Sign Out</a></li>
+          </ul> -->
+
+  </nav>
+<!--  {% for message in messages%}
+  <div class="alert alert-{{ message.tags }}" role="alert">
+    <strong>Message: </strong> {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+
+-->
+
+
+
+
+  <!--  d
+
+
+d
+
+d
+d
+d
+d
+d
+d
+d
+d
+d
+
+d
+d
+d
+
+d
+
+d
+-->
+  <div class=" m-3">
+    <div>
+      <ul class="nav nav-tabs" id="myTab">
+
+        <li class="nav-item active "><a data-toggle="tab" href="#Home" class="text-success nav-link active "><i
+              class="fa fa-bookmark-o"></i> Dashboard</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <!-- 
+        ###############################################################################################################################
+        #
+        #
+        #
+        #                                 Home
+        #
+        #
+        #
+        ###############################################################################################################################
+       -->
+        <div id="Home" class="tab-pane active">
+          <h3></h3>
+
+          <div class="accordion my-3" id="accordionExample">
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse"
+                    aria-expanded="false" aria-controls="collapseTwo">
+                    Upload Assignment
+                  </button>
+                </h5>
+              </div>
+              <div id="collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="row panel panel-success" style="margin-top:2%;">
+                    <div class="fluid container">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-lg-12 col-md-12">
+                            <div class="row">
+                              <div class="col-lg-9 col-md-9">
+                                <div class="tab-content">
+                                  <div id="Personal" class="tab-pane active">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <thead>
+                                          <th>Review</th>
+                                          <th>File Upload</th>
+                                          <th>Upload</th>
+                                          <th>Download </th>
+                                          <th>Status</th>
+                                        </thead>
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success">Review-1</td>
+                                            <td><input id="input-b5" name="input-b5[]" type="file" multiple> </td>
+                                              <td><button class="btn-primary">Upload</button></td>
+                                            <td><a href="media/{{tfile1}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                            </svg></a></td>
+                                            <td>Submitted</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Review-2</td>
+                                            <td><input id="input-b5" name="input-b5[]" type="file" multiple> </td>
+                                              <td><button class="btn-primary">Upload</button></td>
+                                            <td><a href="media/{{tfile2}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                            </svg></a></td>
+                                            <td>Submitted</td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Review-3</td>
+                                            <td><input id="input-b5" name="input-b5[]" type="file" multiple> </td>
+                                              <td><button class="btn-primary">Upload</button></td>
+                                            <td><a href="media/{{tfile3}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                            </svg></a></td>
+                                            <td>Submitted</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /.table-responsive -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse1"
+                    aria-expanded="false" aria-controls="collapseTwo">
+                    Download Certificate
+                  </button>
+                </h5>
+              </div>
+              <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="row panel panel-success" style="margin-top:2%;">
+                    <div class="fluid container">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-lg-12 col-md-12">
+                            <div class="row">
+                              <div class="col-lg-3 col-md-3">
+                                <div class="table-responsive panel">
+                                </div>
+                              </div>
+                              <table class="table"> 
+                                <thead>
+                                  <th scope="col">Student Name</th>
+                                  <th scope="col">Student Certificate</th>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      Raghav Agarwal
+                                    </td>
+                                    <td><a href="www.google.com"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                    </svg></a></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /.table-responsive -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+
+        </div>
+
+        <!-- 
+        ###############################################################################################################################
+        #
+        #
+        #
+        #                                 All participants
+        #
+        #
+        #
+        ###############################################################################################################################
+       -->
+        
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <!--  d
+
+
+d
+
+d
+d
+d
+d
+d
+d
+d
+d
+d
+
+d
+d
+d
+
+d
+
+d
+-->
+<script>
+  $(document).ready(function() {
+      $("#input-b5").fileinput({showCaption: false, dropZoneEnabled: false});
+  });
+  </script>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

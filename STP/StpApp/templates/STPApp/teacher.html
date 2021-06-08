@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en">
+{%load static %}
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <style>
+    body {
+      background-color: white;
+      font-family: 'Open Sans', sans-serif;
+      display: flexbox;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      transition: background-color .5s;
+    }
+
+    .sidenav {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #8d2d2d;
+      overflow-x: hidden;
+      transition: 0.5s;
+    }
+
+    .right {
+      text-align: right;
+    }
+
+    .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 20px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+      color: #f1f1f1;
+    }
+
+    .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 35px;
+      margin-left: 50px;
+    }
+
+    #main {
+      transition: margin-left .5s;
+      padding: 14px;
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
+
+      .sidenav a {
+        font-size: 18px;
+      }
+    }
+
+
+
+
+
+
+
+    .conatiner {
+      margin: 0;
+      padding-top: 40px;
+      color: #2e323c;
+      background: #f5f6fa;
+      position: relative;
+      height: 100%;
+    }
+
+    .account-settings .user-profile {
+      margin: 0 0 1rem 0;
+      padding-bottom: 1rem;
+      text-align: center;
+    }
+
+    .account-settings .user-profile .user-avatar {
+      margin: 0 0 1rem 0;
+    }
+
+    .account-settings .user-profile .user-avatar img {
+      width: 90px;
+      height: 90px;
+      -webkit-border-radius: 100px;
+      -moz-border-radius: 100px;
+      border-radius: 100px;
+    }
+
+    .account-settings .user-profile h5.user-name {
+      margin: 0 0 0.5rem 0;
+    }
+
+    .account-settings .user-profile h6.user-email {
+      margin: 0;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #9fa8b9;
+    }
+
+    .account-settings .about {
+      margin: 2rem 0 0 0;
+      text-align: center;
+    }
+
+    .account-settings .about h5 {
+      margin: 0 0 15px 0;
+      color: #007ae1;
+    }
+
+    .account-settings .about p {
+      font-size: 0.825rem;
+    }
+
+    .form-control {
+      border: 1px solid #cfd1d8;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+      font-size: .825rem;
+      background: #ffffff;
+      color: #2e323c;
+    }
+
+    .card {
+      background: #ffffff;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      border: 0;
+      margin-bottom: 1rem;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+    $(function () {
+      $('a[data-toggle="tab"]').on('click', function (e) {
+        window.localStorage.setItem('activeTab', $(e.target).attr('href'));
+      });
+      var activeTab = window.localStorage.getItem('activeTab');
+      if (activeTab) {
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+      }
+    });
+
+
+    function myFunction() {
+      window.localStorage.clear();
+    }
+  </script>
+
+  <title>Officer's Page</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #224692;">
+    <a class="navbar-brand" href="/">
+      <img
+        src="data:image/png;base64,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"
+        width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
+      STP
+    </a>
+
+    <div class="ml-auto form-inline">
+
+      <div class="dropdown">
+        <button class="btn btn-outline-none dropdown-toggle" type="button" id="dropdownMenuButton"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+          Welcome {{request.user.first_name}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="teacherlogout" onclick="myFunction()">Logout</a>
+        </div>
+      </div>
+
+
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <!-- <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Sign Out</a></li>
+          </ul> -->
+
+  </nav>
+  <!--
+  {% for message in messages%}
+  <div class="alert alert-{{ message.tags }}" role="alert">
+    <strong>Message: </strong> {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+
+-->
+
+
+
+
+  <!--  d
+
+
+d
+
+d
+d
+d
+d
+d
+d
+d
+d
+d
+
+d
+d
+d
+
+d
+
+d
+-->
+  <div class=" m-3">
+    <div>
+      <ul class="nav nav-tabs" id="myTab">
+
+        <li class="nav-item active "><a data-toggle="tab" href="#Home" class="text-success nav-link active "><i
+              class="fa fa-bookmark-o"></i> Tools</a>
+        </li>
+
+        <li class="nav-item"><a data-toggle="tab" href="#Allpart" class="text-success nav-link"><i
+              class="fa fa-info"></i>
+            Student Info</a></li>
+      </ul>
+      <div class="tab-content">
+        <!-- 
+        ###############################################################################################################################
+        #
+        #
+        #
+        #                                 Home
+        #
+        #
+        #
+        ###############################################################################################################################
+       -->
+        <div id="Home" class="tab-pane active">
+          <h3>Tools</h3>
+
+          <div class="accordion my-3" id="accordionExample">
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse"
+                    aria-expanded="false" aria-controls="collapseTwo">
+                    Generate Assignment
+                  </button>
+                </h5>
+              </div>
+              <div id="collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="row panel panel-success" style="margin-top:2%;">
+                    <div class="fluid container">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-lg-12 col-md-12">
+                            <div class="row">
+                              <div class="col-lg-3 col-md-3">
+                                <div class="table-responsive panel">
+
+
+
+
+                                </div>
+                              </div>
+                              <div class="col-lg-9 col-md-9">
+
+                                <div class="tab-content">
+                                  <div id="Personal" class="tab-pane active">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <thead>
+                                          <th>Review</th>
+                                          <th>File Upload</th>
+                                          <th>Activate assignment</th>
+                                          <th>Status</th>
+                                        </thead>
+                                        <tbody>
+                                          <tr>
+                                            <form action="/treviewfile1" method="post" enctype = "multipart/form-data">
+                                            {% csrf_token %}
+                                            <td class="text-success">Review-1</td>
+                                            <td><input type="file" id="myFile" name="filename1"></td>
+                                            <td><button name="active" class="btn-primary" type="Submit">Upload</button></td>
+                                            <td>{{status1}}</td>
+                                            </form>
+                                          </tr>
+                                          <tr>
+                                            <form action="/treviewfile2" method="post" enctype = "multipart/form-data">
+                                            {% csrf_token %}
+                                            <td class="text-success">Review-2</td>
+                                            <td><input type="file" id="myFile" name="filename2"></td>
+                                            <td><button name="actve" class="btn-primary">Upload</button></td>
+                                            <td>{{status2}}</td>
+                                            </form>
+                                          </tr>
+                                          <tr>
+                                            <form action="/treviewfile3" method="post" enctype = "multipart/form-data">
+                                            {% csrf_token %}
+                                            <td class="text-success">Review-3</td>
+                                            <td><input type="file" id="myFile" name="filename3"></td>
+                                            <td><button name="actve" class="btn-primary">Upload</button></td>
+                                            <td>{{status3 }}</td>
+                                            </form>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /.table-responsive -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse1"
+                    aria-expanded="false" aria-controls="collapseTwo">
+                    Generate Certificate
+                  </button>
+                </h5>
+              </div>
+              <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="col-lg-2 col-md-2 mt-2 mb-1 right"><a role="button" class="btn btn-info "
+                      href="www.google.com">Send certificates </a>
+                  </div>
+                  <div class="row panel panel-success" style="margin-top:2%;">
+                    <div class="fluid container">
+                      <div class="panel-body">
+                        <div class="row">
+
+                          <div class="col-lg-12 col-md-12">
+                            <div class="row">
+                              <div class="col-lg-3 col-md-3">
+
+                              </div>
+                              <table class="table">
+                                <thead>
+                                  <th scope="col">Student Name</th>
+                                  <th scope="col">Student Marks</th>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      Raghav Agarwal
+                                    </td>
+                                    <td>
+                                      50
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /.table-responsive -->
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+
+        </div>
+
+        <!-- 
+        ###############################################################################################################################
+        #
+        #
+        #
+        #                                 All participants
+        #
+        #
+        #
+        ###############################################################################################################################
+       -->
+        <div id="Allpart" class="tab-pane fade ">
+          <div class="row">
+            <div class="col-lg-10 col-md-10 ">
+              <h3>Student Info</h3>
+            </div>
+            <div class="col-lg-2 col-md-2 mt-2 mb-1"><a role="button" class="btn btn-info "
+                href="media/xl_sheets1/all_xl_file1.xlsx">Download Excel <svg width="1em" height="1em"
+                  viewBox="2 2 16 16" class="bi bi-file-spreadsheet-fill" fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M12 1H4a2 2 0 0 0-2 2v2h12V3a2 2 0 0 0-2-2zm2 5h-4v2h4V6zm0 3h-4v2h4V9zm0 3h-4v3h2a2 2 0 0 0 2-2v-1zm-5 3v-3H6v3h3zm-4 0v-3H2v1a2 2 0 0 0 2 2h1zm-3-4h3V9H2v2zm0-3h3V6H2v2zm4 0V6h3v2H6zm0 1h3v2H6V9z" />
+                </svg></a>
+            </div>
+
+
+          </div>
+          {% for i in allforms %}
+          {% ifequal i.counter 2 %}
+          <div class="accordion my-3" id="accordionExample1">
+
+            <div class="card" id="{{ forloop.counter0 }}">
+              <div class="card-header" id="heading{{ forloop.counter0 }}">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapse{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapseTwo">
+                    {{i.name}}
+                  </button>
+                </h5>
+              </div>
+              <div id="collapse{{ forloop.counter0 }}" class="collapse" aria-labelledby="headingTwo"
+                data-parent="#accordionExample1">
+                <div class="card-body">
+                  <div class="row panel panel-success" style="margin-top:2%;">
+                    <div class="fluid container">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-lg-12 col-md-12">
+                            <div class="row">
+                              <div class="col-lg-3 col-md-3">
+                                <div class="table-responsive panel">
+
+                                  <table class="table">
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <img src="media/{{ i.photograph }}" height="200" width="200"
+                                            style="border-radius: 50%;">
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+
+                                          <a style="margin-left: 30%;" type="button" class="dropdown-item"
+                                            style="margin-right: 0px;" data-toggle="modal"
+                                            data-target="#viewprofileModal">View Profile</a>
+
+                                          <div class="modal fade" id="viewprofileModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="officerSigninModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                              <div class="modal-content" style="width: 750px;">
+                                                <div class="modal-header">
+                                                  <h5 class="modal-title text-dark font-weight-bold"
+                                                    id="officerSigninModalLabel">
+                                                    Student Profile
+                                                  </h5>
+                                                  <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                                <div class="container">
+                                                  <div class="row gutters">
+                                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                      <div class="card h-100">
+                                                        <div class="card-body">
+                                                          <div class="row no-gutters">
+                                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                              <h5 class="mb-2 text-dark font-weight-bold">Personal
+                                                                Details</h5>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                              <div class="form-group">
+                                                                <label for="phone">Name : <span
+                                                                    class="text-primary">{{i.name}}</span></label>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                              <div class="form-group">
+                                                                <label for="eMail">Email: <span
+                                                                    class="text-primary">{{i.email}}</span></label>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                              <div class="form-group">
+                                                                <label for="phone">Phone: <span
+                                                                    class="text-primary">{{i.mobile}}</span></label>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                              <div class="form-group">
+                                                                <label for="website">Adhaar Number: <span
+                                                                    class="text-primary">{{i.aadhar}}</span></label>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                              <div class="form-group">
+                                                                <label for="website">DOB: <span
+                                                                    class="text-primary">{{i.dob}}</span></label>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                              <div class="form-group">
+                                                                <label for="website">Gender: <span
+                                                                    class="text-primary">{{i.gender}}</span></label>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                              <div class="form-group">
+                                                                <label for="website">Father's Name: <span
+                                                                    class="text-primary">{{i.fname}}</span></label>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                              <div class="form-group">
+                                                                <label for="website">Father's Occupation: <span
+                                                                    class="text-primary">{{i.foccupation}}</span></label>
+                                                              </div>
+                                                            </div><br><br>
+                                                          </div>
+                                                          <div class="row gutters">
+                                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                              <h5 class="mt-3 mb-2 text-dark font-weight-bold">Academic
+                                                                Details</h5>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                              <div class="form-group">
+                                                                <label for="Street">Name of Institute: <span
+                                                                    class="text-primary">{{i.institutename}}</span></label>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                              <div class="form-group">
+                                                                <label for="ciTy">Name of the Present Course: <span
+                                                                    class="text-primary">{{i.course}}</span></label>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                              <div class="form-group">
+                                                                <label for="sTate">Present Year: <span
+                                                                    class="text-primary">{{i.presentyear}}</span></label>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                              <div class="form-group">
+                                                                <label for="zIp">Latest Sem/Year Percentage: <span
+                                                                    class="text-primary">{{i.cgpa}}</span></label>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                              <div class="form-group">
+                                                                <label for="sTate">Percentage in class XII: <span
+                                                                    class="text-primary">{{i.percentage12}}</span></label>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+
+                                                        </div>
+                                                        <div class="row gutters" style="margin-left: 1%;">
+                                                          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                            <h5 class="mt-3 mb-2 text-dark font-weight-bold">Documents
+                                                            </h5>
+                                                          </div>
+                                                          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                            <div class="form-group">
+                                                              <label for="Street">Training/Bonafide Letter: <a class = "text-primary"
+                                                                  href="media/{{ i.bletter }}">Bonafied.pdf</a></label>
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                            <div class="form-group">
+                                                              <label for="ciTy">Latest Marksheet: <a class = "text-primary"
+                                                                  href="media/{{ i.lmarksheet }}">Marksheet.pdf</a></label>
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                            <div class="form-group">
+                                                              <label for="sTate">Class XII Marksheet: &nbsp<a class = "text-primary"
+                                                                  href="media/{{ i.marksheet12 }}">XII_Marksheet.pdf</a></label>
+                                                            </div>
+                                                          </div>
+
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+
+                                </div>
+                              </div>
+                              <div class="col-lg-9 col-md-9">
+
+                                <div class="tab-content">
+                                  <div id="Personal1" class="tab-pane active">
+                                    <div class="table-responsive panel">
+                                      <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">Assignments</th>
+                                            <th scope="col">Uploaded Files</th>
+                                            <th scope="col">Marks assigned</th>
+                                            <th scope="col">Submit</th>
+                                            <th scope="col">Status</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr>
+                                            <td class="text-success"> Review-1</td>
+                                            <td><a href="google.com" target="_blank">a.pdf</a></td>
+                                            <td>{{i.name}}</td>
+                                            <td><button type="button" class="btn btn-primary">Submit</button></td>
+                                            <td>
+                                              <p>xyaa</p>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success">Review-2</td>
+                                            <td>{{i.aadhar}}</td>
+                                            <td>Marks</td>
+                                            <td><button type="button" class="btn btn-primary">Submit</button></td>
+                                            <td>
+                                              <p>xyaa</p>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td class="text-success"> Review-3
+                                            </td>
+                                            <td>{{ i.dob }}</td>
+                                            <td>Marks</td>
+                                            <td><button type="button" class="btn btn-primary">Submit</button></td>
+                                            <td>
+                                              <p>xyaa</p>
+                                            </td>
+                                          </tr>
+
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+
+
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /.table-responsive -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endifequal %}
+          {% endfor %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
